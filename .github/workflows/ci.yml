@@ -56,25 +56,18 @@ jobs:
           cd ..; mkdir -p deps build/github; cd deps
           wget -q -O - https://github.com/upx/upx/releases/download/v3.00/ucl-1.03.tar.xz | tar -xJ
           wget -q -O - https://github.com/upx/upx/releases/download/v3.00/zlib-1.2.11.tar.xz | tar -xJ
-          ls
           git clone --depth=1 --single-branch https://github.com/upx/upx-testsuite
 
       - name: 'Build'
         run: |
           export C=${{matrix.C}} B=${{matrix.B}} T=${{matrix.T}} X=${{matrix.X}} TRAVIS_OS_NAME=osx
           export BUILD_LOCAL_UCL=1
-          # bash ./.github/travis_build.sh
-          pwd
-          ls
-          make all
+          bash ./.github/travis_build.sh
 
       - name: 'Make artifact'
         run: |
           export C=${{matrix.C}} B=${{matrix.B}}; [ -n "$B" ] || B="release"
-          mkdir tmp
-          pwd
-          ls
-          # cp ../build/github/$C/$B/upx/upx.out tmp/upx
+          mkdir tmpcp ../build/github/$C/$B/upx/upx.out tmp/upx
 
       - name: 'Upload artifact'
         uses: actions/upload-artifact@v2

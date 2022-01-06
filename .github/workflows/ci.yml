@@ -56,6 +56,7 @@ jobs:
           cd ..; mkdir -p deps build/github; cd deps
           wget -q -O - https://github.com/upx/upx/releases/download/v3.00/ucl-1.03.tar.xz | tar -xJ
           wget -q -O - https://github.com/upx/upx/releases/download/v3.00/zlib-1.2.11.tar.xz | tar -xJ
+          ls
           git clone --depth=1 --single-branch https://github.com/upx/upx-testsuite
 
       - name: 'Build'
@@ -66,11 +67,6 @@ jobs:
           pwd
           ls
           make all
-
-      - name: 'Run test suite'
-        run: |
-          export C=${{matrix.C}} B=${{matrix.B}} T=${{matrix.T}} X=${{matrix.X}} TRAVIS_OS_NAME=osx
-          bash ./.github/travis_testsuite_1.sh
 
       - name: 'Make artifact'
         run: |
